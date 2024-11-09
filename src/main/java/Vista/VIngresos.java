@@ -1,8 +1,8 @@
 package Vista;
 
-import Control.controlIngresos;
-import Control.controlCategorias;
-import Control.controlProveedores;
+import Control.ControlIngresos;
+import Control.ControlCategorias;
+import Control.ControlProveedores;
 import Modelado.Categorias;
 import Modelado.Ingresos;
 import Modelado.Proveedores;
@@ -15,9 +15,9 @@ public class VIngresos extends javax.swing.JPanel {
     Ingresos ing = new Ingresos();
     Categorias cat = new Categorias();
     Proveedores pro = new Proveedores();
-    controlIngresos conIng = new controlIngresos();
-    controlCategorias conCat = new controlCategorias();
-    controlProveedores conPro = new controlProveedores();
+    ControlIngresos conIng = new ControlIngresos();
+    ControlCategorias conCat = new ControlCategorias();
+    ControlProveedores conPro = new ControlProveedores();
     DefaultTableModel modeloIngresos = new DefaultTableModel();
 
     public VIngresos() {
@@ -676,15 +676,6 @@ public class VIngresos extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    void limpiarTextosCategorias() {
-        txtIdCat.setText("");
-        txtCategorias.setText("");
-    }
-
-    void limpiarTextosProveedor() {
-        txtIdPro.setText("");
-        txtProveedor.setText("");
-    }
 
     void limpiarTextosIngresos() {
         txtIdIng.setText("");
@@ -757,7 +748,6 @@ public class VIngresos extends javax.swing.JPanel {
     private void btnBuscarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProveedoresActionPerformed
         if (txtIdPro.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un RUC de proveedor.");
-            limpiarTextosProveedor();
         } else {
             String ruc = txtIdPro.getText().trim();
             pro.setRucProveedor(ruc);
@@ -767,7 +757,6 @@ public class VIngresos extends javax.swing.JPanel {
                 txtProveedor.setText(pro.getNombreProveedor());
             } else {
                 JOptionPane.showMessageDialog(null, "Proveedor con ese RUC no encontrado.");
-                limpiarTextosProveedor();
             }
         }
     }//GEN-LAST:event_btnBuscarProveedoresActionPerformed
@@ -775,7 +764,6 @@ public class VIngresos extends javax.swing.JPanel {
     private void btnBuscarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCategoriasActionPerformed
         if (txtIdCat.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un ID de categoría.");
-            limpiarTextosCategorias();
         } else {
             cat.setIdCategorias(Integer.parseInt(txtIdCat.getText()));
 
@@ -784,13 +772,11 @@ public class VIngresos extends javax.swing.JPanel {
                 txtCategorias.setText(cat.getCategoria());
             } else {
                 JOptionPane.showMessageDialog(null, "Identificador de categoría inexistente.");
-                limpiarTextosCategorias();
             }
         }
     }//GEN-LAST:event_btnBuscarCategoriasActionPerformed
 
     private void btnBuscarIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngresoActionPerformed
-
         if (txtIdIng.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un ID de Ingresos.");
             limpiarTextosIngresos();

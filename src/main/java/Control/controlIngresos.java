@@ -1,9 +1,7 @@
 package Control;
 
-import Modelado.Categorias;
 import Modelado.Conexion;
 import Modelado.Ingresos;
-import Modelado.Proveedores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class controlIngresos {
+public class ControlIngresos {
 
     Connection con;
     Conexion cing = new Conexion();
-    Conexion ccat = new Conexion();
-    Conexion cpro = new Conexion();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -169,46 +165,6 @@ public class controlIngresos {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public boolean buscarCategorias(Categorias cat) {
-        String SQL = "SELECT * FROM categorias WHERE idCategorias=?";
-        try {
-            con = ccat.conectar();
-            ps = con.prepareStatement(SQL);
-            ps.setInt(1, cat.getIdCategorias());
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                cat.setIdCategorias(rs.getInt(1));
-                cat.setCategoria(rs.getString(2));
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
-            return false;
-        }
-    }
-
-    public boolean buscarProveedores(Proveedores pro) {
-        String SQL = "SELECT * FROM proveedor WHERE idProveedor = ?";
-        try {
-            con = cpro.conectar();
-            ps = con.prepareStatement(SQL);
-            ps.setInt(1, pro.getIdProveedor());
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                pro.setIdProveedor(rs.getInt(1));
-                pro.setNombreProveedor(rs.getString(2));
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
             return false;
         }
     }

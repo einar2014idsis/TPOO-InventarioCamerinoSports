@@ -1,13 +1,13 @@
 package Vista;
 
-import Control.controlUsuarios;
+import Control.ControlUsuarios;
 import Modelado.Usuarios;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
 
-    controlUsuarios conUs = new controlUsuarios();
+    ControlUsuarios conUs = new ControlUsuarios();
     Usuarios us = new Usuarios();
 
     public Login() {

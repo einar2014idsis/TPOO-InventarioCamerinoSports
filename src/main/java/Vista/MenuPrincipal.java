@@ -311,7 +311,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-
+        VVentas c = new VVentas();
+        c.setSize(978, 600);
+        c.setLocation(0, 0);
+        inventario.removeAll();
+        inventario.add(c, BorderLayout.CENTER);
+        inventario.revalidate();
+        inventario.repaint();
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed

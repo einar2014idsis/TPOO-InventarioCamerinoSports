@@ -1,6 +1,6 @@
 package Vista;
 
-import Control.controlClientes;
+import Control.ControlClientes;
 import Modelado.Clientes;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 public class VClientes extends javax.swing.JPanel {
 
     Clientes cli = new Clientes();
-    controlClientes conCli = new controlClientes();
+    ControlClientes conCli = new ControlClientes();
     DefaultTableModel modeloClientes = new DefaultTableModel();
 
     public VClientes() {

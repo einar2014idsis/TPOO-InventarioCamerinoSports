@@ -1,23 +1,27 @@
 package Modelado;
 
-import java.time.LocalDate;
-
 public class Ventas {
 
     private int idVentas;
+    private int idIngresos;
+    private int idClientes;
     private int cantidad;
-    private LocalDate fechaVenta;
+    private String fechaVenta;
     private float subtotal;
+    private float igv;
     private float total;
 
     public Ventas() {
     }
 
-    public Ventas(int idVentas, int cantidad, LocalDate fechaVenta, float subtotal, float total) {
+    public Ventas(int idVentas, int idIngresos, int idClientes, int cantidad, String fechaVenta, float subtotal, float igv, float total) {
         this.idVentas = idVentas;
+        this.idIngresos = idIngresos;
+        this.idClientes = idClientes;
         this.cantidad = cantidad;
         this.fechaVenta = fechaVenta;
         this.subtotal = subtotal;
+        this.igv = igv;
         this.total = total;
     }
 
@@ -29,6 +33,22 @@ public class Ventas {
         this.idVentas = idVentas;
     }
 
+    public int getIdIngresos() {
+        return idIngresos;
+    }
+
+    public void setIdIngresos(int idIngresos) {
+        this.idIngresos = idIngresos;
+    }
+
+    public int getIdClientes() {
+        return idClientes;
+    }
+
+    public void setIdClientes(int idClientes) {
+        this.idClientes = idClientes;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -37,11 +57,11 @@ public class Ventas {
         this.cantidad = cantidad;
     }
 
-    public LocalDate getFechaVenta() {
+    public String getFechaVenta() {
         return fechaVenta;
     }
 
-    public void setFechaVenta(LocalDate fechaVenta) {
+    public void setFechaVenta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
     }
 
@@ -51,6 +71,14 @@ public class Ventas {
 
     public void setSubtotal(float subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public float getIgv() {
+        return igv;
+    }
+
+    public void setIgv(float igv) {
+        this.igv = igv;
     }
 
     public float getTotal() {

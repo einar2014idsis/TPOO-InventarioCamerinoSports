@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class controlCategorias {
+public class ControlCategorias {
 
     Connection con;
     Conexion ccat = new Conexion();

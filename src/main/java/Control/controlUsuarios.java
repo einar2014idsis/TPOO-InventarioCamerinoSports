@@ -8,7 +8,7 @@ import Modelado.Usuarios;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class controlUsuarios {
+public class ControlUsuarios {
 
     Connection con;
     Conexion cu = new Conexion();

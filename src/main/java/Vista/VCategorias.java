@@ -1,6 +1,6 @@
 package Vista;
 
-import Control.controlCategorias;
+import Control.ControlCategorias;
 import Modelado.Categorias;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 public class VCategorias extends javax.swing.JPanel {
 
     Categorias cat = new Categorias();
-    controlCategorias conCat = new controlCategorias();
+    ControlCategorias conCat = new ControlCategorias();
     DefaultTableModel modeloCategorias = new DefaultTableModel();
 
     public VCategorias() {

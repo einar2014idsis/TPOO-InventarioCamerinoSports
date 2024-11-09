@@ -1,6 +1,6 @@
 package Vista;
 
-import Control.controlProveedores;
+import Control.ControlProveedores;
 import Modelado.Proveedores;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 public class VProveedores extends javax.swing.JPanel {
 
     Proveedores pro = new Proveedores();
-    controlProveedores conPro = new controlProveedores();
+    ControlProveedores conPro = new ControlProveedores();
     DefaultTableModel modeloProveedor = new DefaultTableModel();
 
     public VProveedores() {
