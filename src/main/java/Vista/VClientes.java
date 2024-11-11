@@ -458,28 +458,41 @@ public class VClientes extends javax.swing.JPanel {
             limpiarTextosClientes();
         } else {
             Clientes cliente = new Clientes();
+            boolean clienteEncontrado = false;
             if (!txtDNI.getText().isEmpty()) {
                 try {
                     int dni = Integer.parseInt(txtDNI.getText().trim());
                     cliente.setDniCliente(dni);
+                    if (conCli.buscarClientes(cliente)) {
+                        clienteEncontrado = true;
+                        txtIdCli.setText(String.valueOf(cliente.getIdClientes()));
+                        txtNomCli.setText(cliente.getNombreCliente());
+                        txtApCli.setText(cliente.getApellidoCliente());
+                        txtDNI.setText(String.valueOf(cliente.getDniCliente()));
+                        txtRUC.setText(cliente.getRucCliente());
+                        txtTel.setText(String.valueOf(cliente.getTelefonoCliente()));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cliente no encontrado con el DNI proporcionado.");
+                        limpiarTextosClientes();
+                    }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "El DNI debe ser un número válido.");
-                    return;
+                    limpiarTextosClientes();
                 }
             }
-            if (!txtRUC.getText().isEmpty()) {
+            if (!txtRUC.getText().isEmpty() && !clienteEncontrado) {
                 cliente.setRucCliente(txtRUC.getText().trim());
-            }
-            if (conCli.buscarClientes(cli)) {
-                txtIdCli.setText(String.valueOf(cliente.getIdClientes()));
-                txtNomCli.setText(cliente.getNombreCliente());
-                txtApCli.setText(cliente.getApellidoCliente());
-                txtDNI.setText(String.valueOf(cliente.getDniCliente()));
-                txtRUC.setText(cliente.getRucCliente());
-                txtTel.setText(String.valueOf(cliente.getTelefonoCliente()));
-            } else {
-                JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
-                limpiarTextosClientes();
+                if (conCli.buscarClientes(cliente)) {
+                    txtIdCli.setText(String.valueOf(cliente.getIdClientes()));
+                    txtNomCli.setText(cliente.getNombreCliente());
+                    txtApCli.setText(cliente.getApellidoCliente());
+                    txtDNI.setText(String.valueOf(cliente.getDniCliente()));
+                    txtRUC.setText(cliente.getRucCliente());
+                    txtTel.setText(String.valueOf(cliente.getTelefonoCliente()));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cliente no encontrado con el RUC proporcionado.");
+                    limpiarTextosClientes();
+                }
             }
         }
     }//GEN-LAST:event_btnBuscarClientesActionPerformed

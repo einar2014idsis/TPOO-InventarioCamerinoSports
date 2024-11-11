@@ -192,14 +192,18 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        us = conUs.login(txtUsuario.getText(), txtContraseña.getText());
-        if (us.getUsuario() != null && us.getContraseña() != null) {
-            //JOptionPane.showMessageDialog(null, "Bienvenido");
-            MenuPrincipal m = new MenuPrincipal();
-            m.setVisible(true);
-            m.mostrarMensajeBienvenida("Bienvenido");
+        String usuario = txtUsuario.getText();
+        String contraseña = txtContraseña.getText();
+        if (usuario.isEmpty() || contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de usuario o contraseña no debe estar vacío");
+            return;
+        }
+        us = conUs.login(usuario, contraseña);
+        if (us != null && us.getUsuario() != null && us.getContraseña() != null) {
+            JOptionPane.showMessageDialog(null, "Bienvenido a !CamerinoSports!");
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
             dispose();
-
         } else {
             JOptionPane.showMessageDialog(null, "!!!USUARIO O CONTRASEÑA INCORRECTOS, VERIFIQUE LOS DATOS!!!");
         }

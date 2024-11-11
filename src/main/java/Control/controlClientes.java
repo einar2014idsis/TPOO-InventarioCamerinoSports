@@ -85,12 +85,22 @@ public class ControlClientes {
     }
 
     public boolean buscarClientes(Clientes cli) {
-        String SQL = "SELECT * FROM clientes WHERE dniCliente=? OR rucCliente=?";
+        String SQL = "SELECT * FROM clientes WHERE (dniCliente = ? OR rucCliente = ?)";
         try {
             con = ccli.conectar();
             ps = con.prepareStatement(SQL);
-            ps.setInt(1, cli.getDniCliente());
-            ps.setString(2, cli.getRucCliente());
+            if (cli.getDniCliente() != 0) {
+                ps.setInt(1, cli.getDniCliente());
+            } else {
+                ps.setNull(1, java.sql.Types.INTEGER);
+            }
+
+            if (cli.getRucCliente() != null && !cli.getRucCliente().isEmpty()) {
+                ps.setString(2, cli.getRucCliente());
+            } else {
+                ps.setNull(2, java.sql.Types.VARCHAR);
+            }
+
             rs = ps.executeQuery();
             if (rs.next()) {
                 cli.setIdClientes(rs.getInt(1));
@@ -104,7 +114,7 @@ public class ControlClientes {
                 return false;
             }
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
     }

@@ -5,7 +5,6 @@ Vista\Login$3.class
 Vista\VIngresos$16.class
 Vista\MenuPrincipal$6.class
 Vista\VVentas.class
-Vista\BuscaProductos$4.class
 Vista\VVentas$10.class
 Vista\MenuPrincipal$9.class
 Vista\VVentas$5.class
@@ -23,13 +22,11 @@ Vista\VCategorias$4.class
 Vista\VIngresos$3.class
 Vista\VProveedores$10.class
 Vista\VClientes$7.class
-Vista\BuscaProductos.class
 Vista\MenuPrincipal$3.class
 Control\ControlVentas.class
 Notificaciones\Notification$Type.class
 Vista\BuscarIngresos$2.class
 Vista\Home.class
-Vista\BuscaProductos$1.class
 Vista\BuscarIngresos.class
 Modelado\JpanelRoundRN.class
 Modelado\Ventas.class
@@ -41,7 +38,6 @@ Vista\VVentas$6.class
 Vista\VProveedores$6.class
 Notificaciones\Notification$1$1.class
 Vista\MenuPrincipal$10.class
-Vista\BuscaProductos$2.class
 Vista\MenuPrincipal$4.class
 Vista\VIngresos$18.class
 Vista\Login$1.class
@@ -58,7 +54,6 @@ Control\ControlIngresos.class
 Vista\VClientes$5.class
 Vista\VIngresos$19.class
 Vista\VProveedores$1.class
-Vista\BuscaProductos$3.class
 Vista\VIngresos$12.class
 Vista\VIngresos$5.class
 Vista\VProveedores$7.class
