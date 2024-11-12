@@ -1,9 +1,41 @@
 package Vista;
 
+import Control.ControlIngresos;
+import Modelado.Ingresos;
+import java.awt.Color;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class BuscarIngresos extends javax.swing.JFrame {
+
+    Ingresos ing = new Ingresos();
+    ControlIngresos conIng = new ControlIngresos();
+    DefaultTableModel modeloIngresos = new DefaultTableModel();
 
     public BuscarIngresos() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setBackground(new Color(0, 0, 0, 0));
+    }
+
+    private void listarIng() {
+        List<Ingresos> lista = conIng.listarIngresos();
+        modeloIngresos = (DefaultTableModel) productos.getModel();
+        Object[] ob = new Object[10];
+        for (int i = 0; i < lista.size(); i++) {
+            ob[0] = lista.get(i).getIdIngresos();
+            ob[1] = lista.get(i).getNombreProducto();
+            ob[2] = lista.get(i).getStock();
+            ob[3] = lista.get(i).getIdCategorias();
+            ob[4] = lista.get(i).getFechaIngreso();
+            ob[5] = lista.get(i).getIdProveedor();
+            ob[6] = lista.get(i).getPrecioCompra();
+            ob[7] = lista.get(i).getPrecioVenta();
+            ob[8] = lista.get(i).getImporteCompra();
+            ob[9] = lista.get(i).getImporteVenta();
+            modeloIngresos.addRow(ob);
+        }
+        productos.setModel(modeloIngresos);
     }
 
     @SuppressWarnings("unchecked")
@@ -16,7 +48,7 @@ public class BuscarIngresos extends javax.swing.JFrame {
         txtPreVenta = new javax.swing.JTextField();
         txtIdIng = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        prodcutos = new javax.swing.JTable();
+        productos = new javax.swing.JTable();
         btnCerrar = new RSMaterialComponent.RSButtonMaterialIconDos();
         btnEnviar = new RSMaterialComponent.RSButtonMaterialIconDos();
 
@@ -39,7 +71,7 @@ public class BuscarIngresos extends javax.swing.JFrame {
         txtIdIng.setBackground(new java.awt.Color(255, 255, 255));
         txtIdIng.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
-        prodcutos.setModel(new javax.swing.table.DefaultTableModel(
+        productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -47,12 +79,12 @@ public class BuscarIngresos extends javax.swing.JFrame {
                 "ID", "Nombre", "Stock", "Precio"
             }
         ));
-        prodcutos.addMouseListener(new java.awt.event.MouseAdapter() {
+        productos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                prodcutosMouseClicked(evt);
+                productosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(prodcutos);
+        jScrollPane1.setViewportView(productos);
 
         btnCerrar.setBackground(new java.awt.Color(244, 33, 70));
         btnCerrar.setText("Cerrar");
@@ -134,9 +166,9 @@ public class BuscarIngresos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void prodcutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodcutosMouseClicked
+    private void productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosMouseClicked
 
-    }//GEN-LAST:event_prodcutosMouseClicked
+    }//GEN-LAST:event_productosMouseClicked
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
@@ -160,7 +192,7 @@ public class BuscarIngresos extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonMaterialIconDos btnEnviar;
     private javax.swing.JScrollPane jScrollPane1;
     private Modelado.JpanelRound jpanelRound1;
-    private javax.swing.JTable prodcutos;
+    private javax.swing.JTable productos;
     private javax.swing.JTextField txtIdIng;
     private javax.swing.JTextField txtNomPro;
     private javax.swing.JTextField txtPreVenta;
