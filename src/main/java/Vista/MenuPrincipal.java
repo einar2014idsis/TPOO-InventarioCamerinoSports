@@ -1,6 +1,5 @@
 package Vista;
 
-import Notificaciones.Notification;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -268,7 +267,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         btnHome.setSelected(true);
+        btnVenta.setSelected(false);
         btnClientes.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         Home h = new Home();
         h.setSize(978, 600);
         h.setLocation(0, 0);
@@ -279,8 +284,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        btnClientes.setSelected(true);
         btnHome.setSelected(false);
+        btnVenta.setSelected(false);
+        btnClientes.setSelected(true);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         VClientes cli = new VClientes();
         cli.setSize(978, 600);
         cli.setLocation(0, 0);
@@ -291,8 +302,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresosActionPerformed
-        btnIngresos.setSelected(true);
         btnHome.setSelected(false);
+        btnVenta.setSelected(false);
+        btnClientes.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(true);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         VIngresos ing = new VIngresos();
         ing.setSize(978, 600);
         ing.setLocation(0, 0);
@@ -303,7 +320,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresosActionPerformed
 
     private void btnInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacionActionPerformed
-
+        btnHome.setSelected(false);
+        btnVenta.setSelected(false);
+        btnClientes.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(true);
+        //VIformacion inf = new VIformacion();
+        //inf.setSize(978, 600);
+        //inf.setLocation(0, 0);
+        inventario.removeAll();
+        //inventario.add(inf, BorderLayout.CENTER);
+        inventario.revalidate();
+        inventario.repaint();
     }//GEN-LAST:event_btnInformacionActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -311,6 +342,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
+        btnHome.setSelected(false);
+        btnVenta.setSelected(true);
+        btnClientes.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         VVentas c = new VVentas();
         c.setSize(978, 600);
         c.setLocation(0, 0);
@@ -321,10 +360,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-
+        VUsuarios usu = new VUsuarios();
+        usu.setVisible(true);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        btnHome.setSelected(false);
+        btnVenta.setSelected(false);
+        btnClientes.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(true);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         VProveedores c = new VProveedores();
         c.setSize(978, 600);
         c.setLocation(0, 0);
@@ -335,6 +383,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
+        btnHome.setSelected(false);
+        btnVenta.setSelected(false);
+        btnClientes.setSelected(false);
+        btnCategorias.setSelected(true);
+        btnIngresos.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnInformacion.setSelected(false);
         VCategorias c = new VCategorias();
         c.setSize(978, 600);
         c.setLocation(0, 0);
@@ -352,10 +408,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
     }
 
-    public void mostrarMensajeBienvenida(String mensaje) {
-        Notification notificacion = new Notification(this, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, mensaje);
-        notificacion.showNotification();
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconDos btnCategorias;

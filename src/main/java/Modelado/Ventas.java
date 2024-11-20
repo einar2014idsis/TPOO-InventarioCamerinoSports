@@ -3,9 +3,8 @@ package Modelado;
 public class Ventas {
 
     private int idVentas;
-    private int idIngresos;
+    private String numVenta;
     private int idClientes;
-    private int cantidad;
     private String fechaVenta;
     private float subtotal;
     private float igv;
@@ -14,11 +13,10 @@ public class Ventas {
     public Ventas() {
     }
 
-    public Ventas(int idVentas, int idIngresos, int idClientes, int cantidad, String fechaVenta, float subtotal, float igv, float total) {
+    public Ventas(int idVentas, String numVenta, int idClientes, String fechaVenta, float subtotal, float igv, float total) {
         this.idVentas = idVentas;
-        this.idIngresos = idIngresos;
+        this.numVenta = numVenta;
         this.idClientes = idClientes;
-        this.cantidad = cantidad;
         this.fechaVenta = fechaVenta;
         this.subtotal = subtotal;
         this.igv = igv;
@@ -33,12 +31,12 @@ public class Ventas {
         this.idVentas = idVentas;
     }
 
-    public int getIdIngresos() {
-        return idIngresos;
+    public String getNumVenta() {
+        return numVenta;
     }
 
-    public void setIdIngresos(int idIngresos) {
-        this.idIngresos = idIngresos;
+    public void setNumVenta(String numVenta) {
+        this.numVenta = numVenta;
     }
 
     public int getIdClientes() {
@@ -47,14 +45,6 @@ public class Ventas {
 
     public void setIdClientes(int idClientes) {
         this.idClientes = idClientes;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
     }
 
     public String getFechaVenta() {
@@ -88,4 +78,6 @@ public class Ventas {
     public void setTotal(float total) {
         this.total = total;
     }
+    
+    
 }

@@ -6,7 +6,12 @@ import Control.ControlProveedores;
 import Modelado.Categorias;
 import Modelado.Ingresos;
 import Modelado.Proveedores;
+import com.formdev.flatlaf.json.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,18 +33,29 @@ public class VIngresos extends javax.swing.JPanel {
     private void listarIng() {
         List<Ingresos> lista = conIng.listarIngresos();
         modeloIngresos = (DefaultTableModel) tblIngresos.getModel();
-        Object[] ob = new Object[10];
+        modeloIngresos.setRowCount(0);
+        Object[] ob = new Object[11];
+        SimpleDateFormat dateInputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateOutputFormat = new SimpleDateFormat("dd-MM-yyyy");
+
         for (int i = 0; i < lista.size(); i++) {
             ob[0] = lista.get(i).getIdIngresos();
             ob[1] = lista.get(i).getNombreProducto();
             ob[2] = lista.get(i).getStock();
-            ob[3] = lista.get(i).getIdCategorias();
-            ob[4] = lista.get(i).getFechaIngreso();
-            ob[5] = lista.get(i).getIdProveedor();
-            ob[6] = lista.get(i).getPrecioCompra();
-            ob[7] = lista.get(i).getPrecioVenta();
-            ob[8] = lista.get(i).getImporteCompra();
-            ob[9] = lista.get(i).getImporteVenta();
+            ob[3] = lista.get(i).getTallaNumero();
+            ob[4] = lista.get(i).getIdCategorias();
+            try {
+                String fechaOriginal = lista.get(i).getFechaIngreso();
+                Date fecha = dateInputFormat.parse(fechaOriginal);
+                ob[5] = dateOutputFormat.format(fecha);
+            } catch (Exception e) {
+                ob[5] = lista.get(i).getFechaIngreso();
+            }
+            ob[6] = lista.get(i).getIdProveedor();
+            ob[7] = lista.get(i).getPrecioCompra();
+            ob[8] = lista.get(i).getPrecioVenta();
+            ob[9] = lista.get(i).getImporteCompra();
+            ob[10] = lista.get(i).getImporteVenta();
             modeloIngresos.addRow(ob);
         }
         tblIngresos.setModel(modeloIngresos);
@@ -72,6 +88,8 @@ public class VIngresos extends javax.swing.JPanel {
         txtimpCompra = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtimpVenta = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        txtTaNu = new javax.swing.JTextField();
         jpanelRound5 = new Modelado.JpanelRound();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -261,6 +279,18 @@ public class VIngresos extends javax.swing.JPanel {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Talla-Numero");
+
+        txtTaNu.setBackground(new java.awt.Color(255, 255, 255));
+        txtTaNu.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        txtTaNu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTaNuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpanelRound4Layout = new javax.swing.GroupLayout(jpanelRound4);
         jpanelRound4.setLayout(jpanelRound4Layout);
         jpanelRound4Layout.setHorizontalGroup(
@@ -268,6 +298,8 @@ public class VIngresos extends javax.swing.JPanel {
             .addGroup(jpanelRound4Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jpanelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTaNu, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
                     .addComponent(txtimpVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(txtimpCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,13 +322,13 @@ public class VIngresos extends javax.swing.JPanel {
         jpanelRound4Layout.setVerticalGroup(
             jpanelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanelRound4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(8, 8, 8)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtIdIng, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNomPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -304,13 +336,13 @@ public class VIngresos extends javax.swing.JPanel {
                 .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtfechaIng, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtpreCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtpreCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtpreVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,9 +352,13 @@ public class VIngresos extends javax.swing.JPanel {
                 .addComponent(txtimpCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtimpVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTaNu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jpanelRound5.setBackground(new java.awt.Color(36, 47, 58));
@@ -425,7 +461,7 @@ public class VIngresos extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Ruc-Proveedor");
+        jLabel11.setText("id-Proveedor");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -519,11 +555,11 @@ public class VIngresos extends javax.swing.JPanel {
 
             },
             new String [] {
-                "IdIngreso", "Producto", "Stock", "IdCategoria", "F. Ingreso", "Id Proveedor", "P. Compra", "P. Venta", "I. Compra", "I. Venta"
+                "IdIngreso", "Producto", "Stock", "Talla", "IdCategoria", "F. Ingreso", "Id Proveedor", "P. Compra", "P. Venta", "I. Compra", "I. Venta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -539,7 +575,7 @@ public class VIngresos extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tblIngresos);
         if (tblIngresos.getColumnModel().getColumnCount() > 0) {
             tblIngresos.getColumnModel().getColumn(1).setMinWidth(100);
-            tblIngresos.getColumnModel().getColumn(4).setMinWidth(80);
+            tblIngresos.getColumnModel().getColumn(5).setMinWidth(80);
         }
 
         javax.swing.GroupLayout jpanelRound2Layout = new javax.swing.GroupLayout(jpanelRound2);
@@ -616,18 +652,21 @@ public class VIngresos extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel3)))
-                    .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -635,45 +674,45 @@ public class VIngresos extends javax.swing.JPanel {
                                 .addComponent(jpanelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jpanelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnRegistrarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(btnEliminarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpanelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)))
-                        .addGap(1, 1, 1)
-                        .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpanelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnRegistrarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEditarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminarIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -685,6 +724,7 @@ public class VIngresos extends javax.swing.JPanel {
         txtfechaIng.setText("");
         txtimpVenta.setText("");
         txtStock.setText("");
+        txtTaNu.setText("");
         txtIdPro.setText("");
         txtIdCat.setText("");
         txtCategorias.setText("");
@@ -746,34 +786,13 @@ public class VIngresos extends javax.swing.JPanel {
     }//GEN-LAST:event_tblCategoriasMouseClicked
 
     private void btnBuscarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProveedoresActionPerformed
-        if (txtIdPro.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un RUC de proveedor.");
-        } else {
-            String ruc = txtIdPro.getText().trim();
-            pro.setRucProveedor(ruc);
-
-            if (conPro.buscarProveedores(pro)) {
-                txtIdPro.setText(String.valueOf(pro.getIdProveedor()));
-                txtProveedor.setText(pro.getNombreProveedor());
-            } else {
-                JOptionPane.showMessageDialog(null, "Proveedor con ese RUC no encontrado.");
-            }
-        }
+        BuscarProveedor bp = new BuscarProveedor();
+        bp.setVisible(true);
     }//GEN-LAST:event_btnBuscarProveedoresActionPerformed
 
     private void btnBuscarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCategoriasActionPerformed
-        if (txtIdCat.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un ID de categoría.");
-        } else {
-            cat.setIdCategorias(Integer.parseInt(txtIdCat.getText()));
-
-            if (conCat.buscarCategorias(cat)) {
-                txtIdCat.setText(String.valueOf(cat.getIdCategorias()));
-                txtCategorias.setText(cat.getCategoria());
-            } else {
-                JOptionPane.showMessageDialog(null, "Identificador de categoría inexistente.");
-            }
-        }
+        BuscarCategorias bct = new BuscarCategorias();
+        bct.setVisible(true);
     }//GEN-LAST:event_btnBuscarCategoriasActionPerformed
 
     private void btnBuscarIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngresoActionPerformed
@@ -784,32 +803,42 @@ public class VIngresos extends javax.swing.JPanel {
             ing.setIdIngresos(Integer.parseInt(txtIdIng.getText()));
 
             if (conIng.buscarIngresos(ing)) {
+                SimpleDateFormat dateInputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateOutputFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+                String fechaFormateada = ing.getFechaIngreso();
+                try {
+                    Date fecha = dateInputFormat.parse(fechaFormateada);
+                    fechaFormateada = dateOutputFormat.format(fecha);
+                } catch (Exception e) {
+                }
                 txtIdIng.setText(String.valueOf(ing.getIdIngresos()));
                 txtNomPro.setText(ing.getNombreProducto());
                 txtStock.setText(String.valueOf(ing.getStock()));
+                txtTaNu.setText(String.valueOf(ing.getTallaNumero()));
                 txtIdCat.setText(String.valueOf(ing.getIdCategorias()));
-                txtfechaIng.setText(ing.getFechaIngreso());
+                txtfechaIng.setText(fechaFormateada);
                 txtIdPro.setText(String.valueOf(ing.getIdProveedor()));
                 txtpreCompra.setText(String.valueOf(ing.getPrecioCompra()));
                 txtpreVenta.setText(String.valueOf(ing.getPrecioVenta()));
                 txtimpCompra.setText(String.valueOf(ing.getImporteCompra()));
                 txtimpVenta.setText(String.valueOf(ing.getImporteVenta()));
-
             } else {
                 JOptionPane.showMessageDialog(null, "Identificador de ingreso inexistente.");
                 limpiarTextosIngresos();
             }
         }
+
     }//GEN-LAST:event_btnBuscarIngresoActionPerformed
 
     private void btnEditarIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarIngresoActionPerformed
-
         int fila = tblIngresos.getSelectedRow();
 
         if (fila == -1 && txtIdIng.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Seleccione o indique el ID de un ingreso.");
             return;
         }
+
         List<Ingresos> listaIngresos = conIng.listarIngresos();
         int idIngreso;
 
@@ -837,6 +866,7 @@ public class VIngresos extends javax.swing.JPanel {
         String fechaIngresoOriginal = ingresoActual.getFechaIngreso();
         int idProveedorOriginal = ingresoActual.getIdProveedor();
         int idCategoriaOriginal = ingresoActual.getIdCategorias();
+        String tallaOriginal = ingresoActual.getTallaNumero();
 
         String nuevoNombreProducto = txtNomPro.getText().trim();
         int nuevoStock = stockOriginal;
@@ -845,6 +875,7 @@ public class VIngresos extends javax.swing.JPanel {
         String nuevaFechaIngreso = txtfechaIng.getText().trim();
         int nuevoIdProveedor = idProveedorOriginal;
         int nuevoIdCategoria = idCategoriaOriginal;
+        String nuevaTalla = txtTaNu.getText().trim();
 
         boolean hayCambios = false;
 
@@ -852,6 +883,7 @@ public class VIngresos extends javax.swing.JPanel {
             ingresoActual.setNombreProducto(nuevoNombreProducto);
             hayCambios = true;
         }
+
         if (!txtStock.getText().trim().isEmpty()) {
             try {
                 nuevoStock = Integer.parseInt(txtStock.getText().trim());
@@ -864,6 +896,7 @@ public class VIngresos extends javax.swing.JPanel {
                 return;
             }
         }
+
         if (!txtpreCompra.getText().trim().isEmpty()) {
             try {
                 nuevoPrecioCompra = Double.parseDouble(txtpreCompra.getText().trim());
@@ -876,6 +909,7 @@ public class VIngresos extends javax.swing.JPanel {
                 return;
             }
         }
+
         if (!txtpreVenta.getText().trim().isEmpty()) {
             try {
                 nuevoPrecioVenta = Double.parseDouble(txtpreVenta.getText().trim());
@@ -888,10 +922,23 @@ public class VIngresos extends javax.swing.JPanel {
                 return;
             }
         }
+
         if (!nuevaFechaIngreso.isEmpty() && !nuevaFechaIngreso.equals(fechaIngresoOriginal)) {
-            ingresoActual.setFechaIngreso(nuevaFechaIngreso);
-            hayCambios = true;
+            try {
+                SimpleDateFormat formatoEntrada = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat formatoSalida = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha = formatoEntrada.parse(nuevaFechaIngreso);
+                String fechaConvertida = formatoSalida.format(fecha);
+                ingresoActual.setFechaIngreso(fechaConvertida);
+                hayCambios = true;
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese una fecha válida en formato DD-MM-YYYY.");
+                return;
+            } catch (java.text.ParseException ex) {
+                Logger.getLogger(VIngresos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
         if (!txtIdPro.getText().trim().isEmpty()) {
             try {
                 nuevoIdProveedor = Integer.parseInt(txtIdPro.getText().trim());
@@ -904,6 +951,7 @@ public class VIngresos extends javax.swing.JPanel {
                 return;
             }
         }
+
         if (!txtIdCat.getText().trim().isEmpty()) {
             try {
                 nuevoIdCategoria = Integer.parseInt(txtIdCat.getText().trim());
@@ -914,6 +962,18 @@ public class VIngresos extends javax.swing.JPanel {
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de categoría válido.");
                 return;
+            }
+        }
+
+        if (!nuevaTalla.isEmpty() && !nuevaTalla.equals(tallaOriginal)) {
+            boolean tallaExiste = listaIngresos.stream()
+                    .anyMatch(ing -> ing.getTallaNumero().equals(nuevaTalla) && ing.getIdIngresos() != idIngreso);
+            if (tallaExiste) {
+                JOptionPane.showMessageDialog(null, "La talla ya existe en otro registro. No se puede modificar.");
+                return;
+            } else {
+                ingresoActual.setTallaNumero(nuevaTalla);
+                hayCambios = true;
             }
         }
 
@@ -985,13 +1045,14 @@ public class VIngresos extends javax.swing.JPanel {
         txtIdIng.setText(tblIngresos.getValueAt(fila, 0).toString());
         txtNomPro.setText(tblIngresos.getValueAt(fila, 1).toString());
         txtStock.setText(tblIngresos.getValueAt(fila, 2).toString());
-        txtIdCat.setText(tblIngresos.getValueAt(fila, 3).toString());
-        txtfechaIng.setText(tblIngresos.getValueAt(fila, 4).toString());
-        txtIdPro.setText(tblIngresos.getValueAt(fila, 5).toString());
-        txtpreCompra.setText(tblIngresos.getValueAt(fila, 6).toString());
-        txtpreVenta.setText(tblIngresos.getValueAt(fila, 7).toString());
-        txtimpCompra.setText(tblIngresos.getValueAt(fila, 8).toString());
-        txtimpVenta.setText(tblIngresos.getValueAt(fila, 9).toString());
+        txtTaNu.setText(tblIngresos.getValueAt(fila, 3).toString());
+        txtIdCat.setText(tblIngresos.getValueAt(fila, 4).toString());
+        txtfechaIng.setText(tblIngresos.getValueAt(fila, 5).toString());
+        txtIdPro.setText(tblIngresos.getValueAt(fila, 6).toString());
+        txtpreCompra.setText(tblIngresos.getValueAt(fila, 7).toString());
+        txtpreVenta.setText(tblIngresos.getValueAt(fila, 8).toString());
+        txtimpCompra.setText(tblIngresos.getValueAt(fila, 9).toString());
+        txtimpVenta.setText(tblIngresos.getValueAt(fila, 10).toString());
     }//GEN-LAST:event_tblIngresosMouseClicked
 
     private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
@@ -1007,15 +1068,19 @@ public class VIngresos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "El campo de nombre de producto no puede estar vacío.");
             return;
         }
-        if (txtStock.getText().trim().isEmpty()) {
+        if (txtTaNu.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de talla no puede estar vacío.");
+            return;
+        }
+        if (txtStock.getText().trim().isEmpty() || !txtStock.getText().trim().matches("\\d+")) {
             JOptionPane.showMessageDialog(null, "El campo de stock debe ser numérico.");
             return;
         }
-        if (txtpreCompra.getText().trim().isEmpty()) {
+        if (txtpreCompra.getText().trim().isEmpty() || !txtpreCompra.getText().trim().matches("\\d+(\\.\\d+)?")) {
             JOptionPane.showMessageDialog(null, "El campo de precio de compra debe ser un número válido.");
             return;
         }
-        if (txtpreVenta.getText().trim().isEmpty()) {
+        if (txtpreVenta.getText().trim().isEmpty() || !txtpreVenta.getText().trim().matches("\\d+(\\.\\d+)?")) {
             JOptionPane.showMessageDialog(null, "El campo de precio de venta debe ser un número válido.");
             return;
         }
@@ -1023,11 +1088,24 @@ public class VIngresos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "El campo de fecha de ingreso no puede estar vacío.");
             return;
         }
+        String fechaIngreso = txtfechaIng.getText().trim();
+        if (!fechaIngreso.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            JOptionPane.showMessageDialog(null, "El campo de fecha debe tener el formato: día-mes-año (dd-MM-yyyy).");
+            return;
+        }
         try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+            inputFormat.setLenient(false);
+            Date fechaValida = inputFormat.parse(fechaIngreso);
+
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaMysql = outputFormat.format(fechaValida);
+
             Ingresos nuevoProducto = new Ingresos();
             nuevoProducto.setNombreProducto(txtNomPro.getText().trim());
+            nuevoProducto.setTallaNumero(txtTaNu.getText().trim());
             nuevoProducto.setStock(Integer.parseInt(txtStock.getText().trim()));
-            nuevoProducto.setFechaIngreso(txtfechaIng.getText().trim());
+            nuevoProducto.setFechaIngreso(fechaMysql);
             nuevoProducto.setPrecioCompra(Double.parseDouble(txtpreCompra.getText().trim()));
             nuevoProducto.setPrecioVenta(Double.parseDouble(txtpreVenta.getText().trim()));
             nuevoProducto.setIdCategorias(Integer.parseInt(txtIdCat.getText().trim()));
@@ -1041,10 +1119,11 @@ public class VIngresos extends javax.swing.JPanel {
 
             List<Ingresos> listaProductos = conIng.listarIngresos();
             boolean productoExiste = listaProductos.stream()
-                    .anyMatch(producto -> txtNomPro.getText().trim().equalsIgnoreCase(producto.getNombreProducto()));
+                    .anyMatch(producto -> txtNomPro.getText().trim().equalsIgnoreCase(producto.getNombreProducto())
+                    && txtTaNu.getText().trim().equalsIgnoreCase(producto.getTallaNumero()));
 
             if (productoExiste) {
-                JOptionPane.showMessageDialog(null, "El producto con ese nombre ya existe.");
+                JOptionPane.showMessageDialog(null, "El producto con ese nombre y talla ya existe.");
                 return;
             }
 
@@ -1056,12 +1135,18 @@ public class VIngresos extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo registrar el producto.");
             }
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "La fecha ingresada no es válida: " + e.getMessage());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Por favor ingresa un número válido: " + e.getMessage());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarIngresoActionPerformed
+
+    private void txtTaNuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaNuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTaNuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconDos btnBuscarCategorias;
@@ -1078,6 +1163,7 @@ public class VIngresos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1096,13 +1182,14 @@ public class VIngresos extends javax.swing.JPanel {
     private Modelado.JpanelRound jpanelRound6;
     private javax.swing.JTable tblCategorias;
     private javax.swing.JTable tblIngresos;
-    private javax.swing.JTextField txtCategorias;
-    private javax.swing.JTextField txtIdCat;
+    public static javax.swing.JTextField txtCategorias;
+    public static javax.swing.JTextField txtIdCat;
     private javax.swing.JTextField txtIdIng;
-    private javax.swing.JTextField txtIdPro;
+    public static javax.swing.JTextField txtIdPro;
     private javax.swing.JTextField txtNomPro;
-    private javax.swing.JTextField txtProveedor;
+    public static javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtStock;
+    private javax.swing.JTextField txtTaNu;
     private javax.swing.JTextField txtfechaIng;
     private javax.swing.JTextField txtimpCompra;
     private javax.swing.JTextField txtimpVenta;

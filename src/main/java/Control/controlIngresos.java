@@ -18,8 +18,7 @@ public class ControlIngresos {
 
     public boolean reinicioIngresos(Ingresos ing) {
         String resetSQL = "ALTER TABLE ingresos AUTO_INCREMENT = 1";
-        String insertSQL = "INSERT INTO ingresos (nombreProducto, stock, idCategorias, fechaIngreso, idProveedor, precioCompra, precioVenta, importeCompra, importeVenta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        String insertSQL = "INSERT INTO ingresos (nombreProducto, stock, tallaNumero, idCategorias, fechaIngreso, idProveedor, precioCompra, precioVenta, importeCompra, importeVenta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             con = cing.conectar();
             ps = con.prepareStatement(resetSQL);
@@ -27,13 +26,14 @@ public class ControlIngresos {
             ps = con.prepareStatement(insertSQL);
             ps.setString(1, ing.getNombreProducto());
             ps.setInt(2, ing.getStock());
-            ps.setInt(3, ing.getIdCategorias());
-            ps.setString(4, ing.getFechaIngreso());
-            ps.setInt(5, ing.getIdProveedor());
-            ps.setDouble(6, ing.getPrecioCompra());
-            ps.setDouble(7, ing.getPrecioVenta());
-            ps.setDouble(8, ing.getImporteCompra());
-            ps.setDouble(9, ing.getImporteVenta());
+            ps.setString(3, ing.getTallaNumero());
+            ps.setInt(4, ing.getIdCategorias());
+            ps.setString(5, ing.getFechaIngreso());
+            ps.setInt(6, ing.getIdProveedor());
+            ps.setDouble(7, ing.getPrecioCompra());
+            ps.setDouble(8, ing.getPrecioVenta());
+            ps.setDouble(9, ing.getImporteCompra());
+            ps.setDouble(10, ing.getImporteVenta());
             int n = ps.executeUpdate();
 
             return n != 0;
@@ -44,19 +44,20 @@ public class ControlIngresos {
     }
 
     public boolean insertarIngresos(Ingresos ing) {
-        String SQL = "INSERT INTO ingresos (nombreProducto, stock, idCategorias, fechaIngreso, idProveedor, precioCompra, precioVenta, importeCompra, importeVenta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO ingresos (nombreProducto, stock, tallaNumero, idCategorias, fechaIngreso, idProveedor, precioCompra, precioVenta, importeCompra, importeVenta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             con = cing.conectar();
             ps = con.prepareStatement(SQL);
             ps.setString(1, ing.getNombreProducto());
             ps.setInt(2, ing.getStock());
-            ps.setInt(3, ing.getIdCategorias());
-            ps.setString(4, ing.getFechaIngreso());
-            ps.setInt(5, ing.getIdProveedor());
-            ps.setDouble(6, ing.getPrecioCompra());
-            ps.setDouble(7, ing.getPrecioVenta());
-            ps.setDouble(8, ing.getImporteCompra());
-            ps.setDouble(9, ing.getImporteVenta());
+            ps.setString(3, ing.getTallaNumero());
+            ps.setInt(4, ing.getIdCategorias());
+            ps.setString(5, ing.getFechaIngreso());
+            ps.setInt(6, ing.getIdProveedor());
+            ps.setDouble(7, ing.getPrecioCompra());
+            ps.setDouble(8, ing.getPrecioVenta());
+            ps.setDouble(9, ing.getImporteCompra());
+            ps.setDouble(10, ing.getImporteVenta());
             int n = ps.executeUpdate();
             if (n != 0) {
                 return true;
@@ -81,13 +82,14 @@ public class ControlIngresos {
                 ing.setIdIngresos(rs.getInt(1));
                 ing.setNombreProducto(rs.getString(2));
                 ing.setStock(rs.getInt(3));
-                ing.setIdCategorias(rs.getInt(4));
-                ing.setFechaIngreso(rs.getString(5));
-                ing.setIdProveedor(rs.getInt(6));
-                ing.setPrecioCompra(rs.getFloat(7));
-                ing.setPrecioVenta(rs.getFloat(8));
-                ing.setImporteCompra(rs.getFloat(9));
-                ing.setImporteVenta(rs.getFloat(10));
+                ing.setTallaNumero(rs.getString(4));
+                ing.setIdCategorias(rs.getInt(5));
+                ing.setFechaIngreso(rs.getString(6));
+                ing.setIdProveedor(rs.getInt(7));
+                ing.setPrecioCompra(rs.getFloat(8));
+                ing.setPrecioVenta(rs.getFloat(9));
+                ing.setImporteCompra(rs.getFloat(10));
+                ing.setImporteVenta(rs.getFloat(11));
                 lista.add(ing);
             }
         } catch (Exception e) {
@@ -107,13 +109,14 @@ public class ControlIngresos {
                 ing.setIdIngresos(rs.getInt(1));
                 ing.setNombreProducto(rs.getString(2));
                 ing.setStock(rs.getInt(3));
-                ing.setIdCategorias(rs.getInt(4));
-                ing.setFechaIngreso(rs.getString(5));
-                ing.setIdProveedor(rs.getInt(6));
-                ing.setPrecioCompra(rs.getFloat(7));
-                ing.setPrecioVenta(rs.getFloat(8));
-                ing.setImporteCompra(rs.getFloat(9));
-                ing.setImporteVenta(rs.getFloat(10));
+                ing.setTallaNumero(rs.getString(4));
+                ing.setIdCategorias(rs.getInt(5));
+                ing.setFechaIngreso(rs.getString(6));
+                ing.setIdProveedor(rs.getInt(7));
+                ing.setPrecioCompra(rs.getFloat(8));
+                ing.setPrecioVenta(rs.getFloat(9));
+                ing.setImporteCompra(rs.getFloat(10));
+                ing.setImporteVenta(rs.getFloat(11));
                 return true;
             } else {
                 return false;
@@ -125,20 +128,21 @@ public class ControlIngresos {
     }
 
     public boolean editarIngresos(Ingresos ing) {
-        String SQL = "UPDATE ingresos SET nombreProducto = ?, stock = ?, idCategorias = ?, fechaIngreso = ?, idProveedor = ?, precioCompra = ?, precioVenta = ?, importeCompra = ?, importeVenta = ? WHERE idIngresos = ?";
+        String SQL = "UPDATE ingresos SET nombreProducto = ?, stock = ?, tallaNumero = ?, idCategorias = ?, fechaIngreso = ?, idProveedor = ?, precioCompra = ?, precioVenta = ?, importeCompra = ?, importeVenta = ? WHERE idIngresos = ?";
         try {
             con = cing.conectar();
             ps = con.prepareStatement(SQL);
             ps.setString(1, ing.getNombreProducto());
             ps.setInt(2, ing.getStock());
-            ps.setInt(3, ing.getIdCategorias());
-            ps.setString(4, ing.getFechaIngreso());
-            ps.setInt(5, ing.getIdProveedor());
-            ps.setDouble(6, ing.getPrecioCompra());
-            ps.setDouble(7, ing.getPrecioVenta());
-            ps.setDouble(8, ing.getImporteCompra());
-            ps.setDouble(9, ing.getImporteVenta());
-            ps.setInt(10, ing.getIdIngresos());
+            ps.setString(3, ing.getTallaNumero());
+            ps.setInt(4, ing.getIdCategorias());
+            ps.setString(5, ing.getFechaIngreso());
+            ps.setInt(6, ing.getIdProveedor());
+            ps.setDouble(7, ing.getPrecioCompra());
+            ps.setDouble(8, ing.getPrecioVenta());
+            ps.setDouble(9, ing.getImporteCompra());
+            ps.setDouble(10, ing.getImporteVenta());
+            ps.setInt(11, ing.getIdIngresos());
             int n = ps.executeUpdate();
             if (n != 0) {
                 return true;

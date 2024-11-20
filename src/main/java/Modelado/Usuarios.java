@@ -9,7 +9,6 @@ public class Usuarios {
     private int dniUsuario;
     private String direccionUsuario;
     private int telefonoUsuario;
-    private String correoUsuario;
     private String tipoDeUsuario;
     private String fechaInicio;
     private String fechaNacimiento;
@@ -20,7 +19,7 @@ public class Usuarios {
 
     }
 
-    public Usuarios(int idUsuario, String nombreUsuario, String apellidoUsuario, String generoUsuario, int dniUsuario, String direccionUsuario, int telefonoUsuario, String correoUsuario, String tipoDeUsuario, String fechaInicio, String fechaNacimiento, String usuario, String contraseña) {
+    public Usuarios(int idUsuario, String nombreUsuario, String apellidoUsuario, String generoUsuario, int dniUsuario, String direccionUsuario, int telefonoUsuario, String tipoDeUsuario, String fechaInicio, String fechaNacimiento, String usuario, String contraseña) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.apellidoUsuario = apellidoUsuario;
@@ -28,7 +27,6 @@ public class Usuarios {
         this.dniUsuario = dniUsuario;
         this.direccionUsuario = direccionUsuario;
         this.telefonoUsuario = telefonoUsuario;
-        this.correoUsuario = correoUsuario;
         this.tipoDeUsuario = tipoDeUsuario;
         this.fechaInicio = fechaInicio;
         this.fechaNacimiento = fechaNacimiento;
@@ -90,14 +88,6 @@ public class Usuarios {
 
     public void setTelefonoUsuario(int telefonoUsuario) {
         this.telefonoUsuario = telefonoUsuario;
-    }
-
-    public String getCorreoUsuario() {
-        return correoUsuario;
-    }
-
-    public void setCorreoUsuario(String correoUsuario) {
-        this.correoUsuario = correoUsuario;
     }
 
     public String getTipoDeUsuario() {

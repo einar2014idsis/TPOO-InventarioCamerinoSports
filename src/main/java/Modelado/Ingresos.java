@@ -5,6 +5,7 @@ public class Ingresos {
     private int idIngresos;
     private String nombreProducto;
     private int stock;
+    private String tallaNumero;
     private int idCategorias;
     private String fechaIngreso;
     private int idProveedor;
@@ -16,10 +17,11 @@ public class Ingresos {
     public Ingresos() {
     }
 
-    public Ingresos(int idIngresos, String nombreProducto, int stock, int idCategorias, String fechaIngreso, int idProveedor, double precioCompra, double precioVenta, double importeCompra, double importeVenta) {
+    public Ingresos(int idIngresos, String nombreProducto, int stock, String tallaNumero, int idCategorias, String fechaIngreso, int idProveedor, double precioCompra, double precioVenta, double importeCompra, double importeVenta) {
         this.idIngresos = idIngresos;
         this.nombreProducto = nombreProducto;
         this.stock = stock;
+        this.tallaNumero = tallaNumero;
         this.idCategorias = idCategorias;
         this.fechaIngreso = fechaIngreso;
         this.idProveedor = idProveedor;
@@ -51,6 +53,14 @@ public class Ingresos {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getTallaNumero() {
+        return tallaNumero;
+    }
+
+    public void setTallaNumero(String tallaNumero) {
+        this.tallaNumero = tallaNumero;
     }
 
     public int getIdCategorias() {
@@ -108,5 +118,5 @@ public class Ingresos {
     public void setImporteVenta(double importeVenta) {
         this.importeVenta = importeVenta;
     }
-
+    
 }
