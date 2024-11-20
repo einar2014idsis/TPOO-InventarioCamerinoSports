@@ -1,7 +1,6 @@
 package Vista;
 
 import Control.ControlProveedores;
-import Modelado.Clientes;
 import Modelado.Proveedores;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;

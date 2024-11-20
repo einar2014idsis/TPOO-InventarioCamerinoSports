@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class VClientes extends javax.swing.JPanel {
 
-    Clientes cli = new Clientes();
     ControlClientes conCli = new ControlClientes();
     DefaultTableModel modeloClientes = new DefaultTableModel();
 

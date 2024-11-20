@@ -1,30 +1,19 @@
 package Vista;
 
-import Control.ControlClientes;
 import Control.ControlDetallesVentas;
-import Control.ControlIngresos;
 import Control.ControlVentas;
-import Modelado.Clientes;
-import Modelado.Ingresos;
 import Modelado.Ventas;
 import com.formdev.flatlaf.json.ParseException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VVentas extends javax.swing.JPanel {
 
-    Ventas ven = new Ventas();
-    Clientes cli = new Clientes();
-    Ingresos ing = new Ingresos();
     ControlVentas conVen = new ControlVentas();
     ControlDetallesVentas conDeVen = new ControlDetallesVentas();
-    ControlClientes conCli = new ControlClientes();
-    ControlIngresos conIng = new ControlIngresos();
     DefaultTableModel modeloVentas = new DefaultTableModel();
 
     public VVentas() {
@@ -32,14 +21,13 @@ public class VVentas extends javax.swing.JPanel {
         numVentas();
     }
 
-    void numVentas() {
+    private void numVentas() {
         String numero = conVen.numVenta();
         if (numero == null) {
             txtNumVenta.setText("00001");
         } else {
-            int i = Integer.parseInt(numero); // Convierte el número actual a entero
-            i = i + 1; // Incrementa el número
-            // Formatea el número con ceros a la izquierda (hasta 5 dígitos)
+            int i = Integer.parseInt(numero);
+            i = i + 1;
             txtNumVenta.setText(String.format("%05d", i));
         }
     }
@@ -645,9 +633,9 @@ public class VVentas extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtNumVenta)
-                                    .addComponent(jLabel15))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNumVenta, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(4, 4, 4)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -821,13 +809,11 @@ public class VVentas extends javax.swing.JPanel {
         int idIngresos = Integer.parseInt(txtIdIng.getText());
         int cantidad = Integer.parseInt(txtStockSaliente.getText());
         String producto = txtNomPro.getText();
-
-        // Validación del precio para asegurarse de que sea un número decimal válido
-        if (txtPreVen.getText().matches("\\d+(\\.\\d+)?")) {  // Validación de número decimal
-            precio = Double.parseDouble(txtPreVen.getText());  // Si es válido, lo convertimos a double
+        if (txtPreVen.getText().matches("\\d+(\\.\\d+)?")) {
+            precio = Double.parseDouble(txtPreVen.getText());
         } else {
             JOptionPane.showMessageDialog(null, "Por favor ingresa un número válido para el precio.");
-            return;  // Si no es válido, mostramos un mensaje de error y salimos del método
+            return;
         }
 
         importe = cantidad * precio;
@@ -843,7 +829,7 @@ public class VVentas extends javax.swing.JPanel {
             lista.add(precio);
             lista.add(importe);
 
-            Object[] ob = new Object[6]; // Modificado para incluir todos los campos
+            Object[] ob = new Object[6];
             ob[0] = lista.get(0);
             ob[1] = lista.get(1);
             ob[2] = lista.get(2);
@@ -853,13 +839,9 @@ public class VVentas extends javax.swing.JPanel {
 
             modeloVentas.addRow(ob);
             tblVentas.setModel(modeloVentas);
-
-            // Cálculos para subtotal, IGV y total
-            subtotal = importe / 1.18; // Asumiendo que el IGV es del 18%
+            subtotal = importe / 1.18;
             igv = importe - subtotal;
             total = importe;
-
-            // Autocompletar los campos de subtotal, IGV y total
             txtSubTotal.setText(String.format("%.2f", subtotal));
             txtIGV.setText(String.format("%.2f", igv));
             txtTotal.setText(String.format("%.2f", total));
@@ -873,10 +855,10 @@ public class VVentas extends javax.swing.JPanel {
         for (int i = 0; i < tblVentas.getRowCount(); i++) {
             int idVentas = Integer.parseInt(tblVentas.getValueAt(i, 0).toString());
             int idIngresos = Integer.parseInt(tblVentas.getValueAt(i, 1).toString());
-            int cantidad = Integer.parseInt(tblVentas.getValueAt(i, 3).toString());  // Stock de salida
-            double importe = Double.parseDouble(tblVentas.getValueAt(i, 5).toString());  // Importe
+            int cantidad = Integer.parseInt(tblVentas.getValueAt(i, 3).toString());
+            double importe = Double.parseDouble(tblVentas.getValueAt(i, 5).toString());
 
-            conDeVen.registrarDeVentas(idVentas, idIngresos, cantidad, importe);  // Registra el detalle de la venta
+            conDeVen.registrarDeVentas(idVentas, idIngresos, cantidad, importe);
         }
     }
 

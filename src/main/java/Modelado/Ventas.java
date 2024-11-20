@@ -78,6 +78,5 @@ public class Ventas {
     public void setTotal(float total) {
         this.total = total;
     }
-    
-    
+
 }

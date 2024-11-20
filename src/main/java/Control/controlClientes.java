@@ -5,6 +5,7 @@ import Modelado.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class ControlClientes {
             int n = ps.executeUpdate();
 
             return n != 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             return false;
         }
@@ -50,12 +51,8 @@ public class ControlClientes {
             ps.setString(4, cli.getRucCliente());
             ps.setInt(5, cli.getTelefonoCliente());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
+            return n != 0;
+        } catch (SQLException ex) {
             JOptionPane.showConfirmDialog(null, ex);
             return false;
         }
@@ -78,7 +75,7 @@ public class ControlClientes {
                 cli.setTelefonoCliente(rs.getInt(6));
                 lista.add(cli);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return lista;
@@ -113,7 +110,7 @@ public class ControlClientes {
             } else {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return false;
         }
@@ -131,7 +128,7 @@ public class ControlClientes {
             ps.setString(5, cli.getRucCliente());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return false;
         }
@@ -146,7 +143,7 @@ public class ControlClientes {
             ps.setString(2, cli.getRucCliente());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
             return false;
         }

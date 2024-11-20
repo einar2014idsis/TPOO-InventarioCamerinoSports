@@ -5,6 +5,7 @@ import java.sql.Connection;
 import Modelado.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -29,7 +30,7 @@ public class ControlCategorias {
             int n = ps.executeUpdate();
 
             return n != 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             return false;
         }
@@ -42,12 +43,8 @@ public class ControlCategorias {
             ps = con.prepareStatement(SQL);
             ps.setString(1, cat.getCategoria());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
+            return n != 0;
+        } catch (SQLException ex) {
             JOptionPane.showConfirmDialog(null, ex);
             return false;
         }
@@ -66,7 +63,7 @@ public class ControlCategorias {
                 cat.setCategoria(rs.getString(2));
                 lista.add(cat);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return lista;
@@ -80,12 +77,8 @@ public class ControlCategorias {
             ps.setString(1, cat.getCategoria());
             ps.setInt(2, cat.getIdCategorias());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+            return n != 0;
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
@@ -98,12 +91,8 @@ public class ControlCategorias {
             ps = con.prepareStatement(SQL);
             ps.setInt(1, cat.getIdCategorias());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+            return n != 0;
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
             return false;
         }
@@ -123,7 +112,7 @@ public class ControlCategorias {
             } else {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }

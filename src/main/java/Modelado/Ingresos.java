@@ -118,5 +118,5 @@ public class Ingresos {
     public void setImporteVenta(double importeVenta) {
         this.importeVenta = importeVenta;
     }
-    
+
 }

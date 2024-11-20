@@ -2,6 +2,7 @@ package Modelado;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Conexion {
@@ -16,7 +17,7 @@ public class Conexion {
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
             con = DriverManager.getConnection(url, user, pass);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
         }
         return con;

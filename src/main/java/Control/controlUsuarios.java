@@ -84,7 +84,7 @@ public class ControlUsuarios {
             int n = ps.executeUpdate();
 
             return n != 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             return false;
         }
@@ -107,12 +107,8 @@ public class ControlUsuarios {
             ps.setString(10, usu.getUsuario());
             ps.setString(11, usu.getContraseña());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
+            return n != 0;
+        } catch (SQLException ex) {
             JOptionPane.showConfirmDialog(null, ex);
             return false;
         }
@@ -141,7 +137,7 @@ public class ControlUsuarios {
                 us.setContraseña(rs.getString(12));
                 lista.add(us);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return lista;
@@ -171,7 +167,7 @@ public class ControlUsuarios {
             } else {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
@@ -195,7 +191,7 @@ public class ControlUsuarios {
             ps.setString(11, usu.getContraseña());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return false;
         }
@@ -219,7 +215,7 @@ public class ControlUsuarios {
             ps.setString(11, usu.getContraseña());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
             return false;
         }

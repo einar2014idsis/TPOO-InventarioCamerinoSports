@@ -5,6 +5,7 @@ import Modelado.Ingresos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -37,7 +38,7 @@ public class ControlIngresos {
             int n = ps.executeUpdate();
 
             return n != 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             return false;
         }
@@ -59,12 +60,8 @@ public class ControlIngresos {
             ps.setDouble(9, ing.getImporteCompra());
             ps.setDouble(10, ing.getImporteVenta());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
+            return n != 0;
+        } catch (SQLException ex) {
             JOptionPane.showConfirmDialog(null, ex);
             return false;
         }
@@ -92,7 +89,7 @@ public class ControlIngresos {
                 ing.setImporteVenta(rs.getFloat(11));
                 lista.add(ing);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return lista;
@@ -121,7 +118,7 @@ public class ControlIngresos {
             } else {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
@@ -144,12 +141,8 @@ public class ControlIngresos {
             ps.setDouble(10, ing.getImporteVenta());
             ps.setInt(11, ing.getIdIngresos());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+            return n != 0;
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
@@ -162,12 +155,8 @@ public class ControlIngresos {
             ps = con.prepareStatement(SQL);
             ps.setInt(1, ing.getIdIngresos());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+            return n != 0;
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
             return false;
         }

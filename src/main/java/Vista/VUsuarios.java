@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class VUsuarios extends javax.swing.JFrame {
 
-    Usuarios usu = new Usuarios();
     ControlUsuarios conUsu = new ControlUsuarios();
     DefaultTableModel modeloUsuarios = new DefaultTableModel();
 
@@ -27,11 +26,10 @@ public class VUsuarios extends javax.swing.JFrame {
     private void listarUsu() {
         List<Usuarios> lista = conUsu.listarUsuarios();
         modeloUsuarios = (DefaultTableModel) tblUsuarios.getModel();
-        modeloUsuarios.setRowCount(0);  // Limpiar las filas de la tabla
-
-        Object[] ob = new Object[12]; // Array para las columnas de la tabla
-        SimpleDateFormat dateInputFormat = new SimpleDateFormat("yyyy-MM-dd");  // Formato de la fecha en la base de datos
-        SimpleDateFormat dateOutputFormat = new SimpleDateFormat("dd-MM-yyyy"); // Formato de fecha para mostrar
+        modeloUsuarios.setRowCount(0);
+        Object[] ob = new Object[12];
+        SimpleDateFormat dateInputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateOutputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         for (int i = 0; i < lista.size(); i++) {
             ob[0] = lista.get(i).getIdUsuario();
@@ -44,30 +42,25 @@ public class VUsuarios extends javax.swing.JFrame {
             ob[7] = lista.get(i).getTipoDeUsuario();
 
             try {
-                // Convertir fecha de inicio
-                String fechaInicioOriginal = lista.get(i).getFechaInicio(); // Fecha en formato yyyy-MM-dd
-                Date fechaInicio = dateInputFormat.parse(fechaInicioOriginal); // Convertir a Date
-                ob[9] = dateOutputFormat.format(fechaInicio);  // Formatear a dd-MM-yyyy
+                String fechaInicioOriginal = lista.get(i).getFechaInicio();
+                Date fechaInicio = dateInputFormat.parse(fechaInicioOriginal);
+                ob[9] = dateOutputFormat.format(fechaInicio);
             } catch (Exception e) {
-                ob[9] = lista.get(i).getFechaInicio(); // Si ocurre un error, mostrar la fecha tal como está
+                ob[9] = lista.get(i).getFechaInicio();
             }
 
             try {
-                // Convertir fecha de nacimiento
-                String fechaNacimientoOriginal = lista.get(i).getFechaNacimiento(); // Fecha en formato yyyy-MM-dd
-                Date fechaNacimiento = dateInputFormat.parse(fechaNacimientoOriginal); // Convertir a Date
-                ob[8] = dateOutputFormat.format(fechaNacimiento);  // Formatear a dd-MM-yyyy
+                String fechaNacimientoOriginal = lista.get(i).getFechaNacimiento();
+                Date fechaNacimiento = dateInputFormat.parse(fechaNacimientoOriginal);
+                ob[8] = dateOutputFormat.format(fechaNacimiento);
             } catch (Exception e) {
-                ob[8] = lista.get(i).getFechaNacimiento(); // Si ocurre un error, mostrar la fecha tal como está
+                ob[8] = lista.get(i).getFechaNacimiento();
             }
-
             ob[10] = lista.get(i).getUsuario();
-            ob[11] = "********";  // Contraseña oculta
-
-            modeloUsuarios.addRow(ob); // Agregar la fila a la tabla
+            ob[11] = "********";
+            modeloUsuarios.addRow(ob);
         }
-
-        tblUsuarios.setModel(modeloUsuarios);  // Establecer el modelo de la tabla
+        tblUsuarios.setModel(modeloUsuarios);
     }
 
     private void limpiarCampos() {
@@ -616,7 +609,6 @@ public class VUsuarios extends javax.swing.JFrame {
             limpiarCampos();
             return;
         }
-
         String dniStr = txtDniUsu.getText().trim();
 
         if (!dniStr.matches("\\d{8}")) {
@@ -641,7 +633,7 @@ public class VUsuarios extends javax.swing.JFrame {
                 txtFeIni.setText(usuario.getFechaInicio());
                 txtFeNac.setText(usuario.getFechaNacimiento());
                 txtSeUsu.setText(usuario.getUsuario());
-                
+
                 String contraseñaOculta = "*****";
                 txContraseña.setText(contraseñaOculta);
                 SelGenUsu.setSelectedItem(usuario.getGeneroUsuario());
@@ -704,7 +696,7 @@ public class VUsuarios extends javax.swing.JFrame {
         }
         String genero = SelGenUsu.getSelectedItem().toString();
         String tipoUsuario = SelTiUsu.getSelectedItem().toString();
-        
+
         if (!txtTelUsu.getText().trim().matches("\\d{9}")) {
             JOptionPane.showMessageDialog(null, "El teléfono debe contener exactamente 9 dígitos.");
             return;
@@ -736,7 +728,7 @@ public class VUsuarios extends javax.swing.JFrame {
             nuevoUsuario.setContraseña(txContraseña.getText().trim());
             nuevoUsuario.setGeneroUsuario(genero);
             nuevoUsuario.setTipoDeUsuario(tipoUsuario);
-            
+
             List<Usuarios> listaUsuarios = conUsu.listarUsuarios();
             boolean usuarioExisteDni = listaUsuarios.stream()
                     .anyMatch(usuario -> txtDniUsu.getText().trim().equals(String.valueOf(usuario.getDniUsuario())));
@@ -770,30 +762,6 @@ public class VUsuarios extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VUsuarios().setVisible(true);

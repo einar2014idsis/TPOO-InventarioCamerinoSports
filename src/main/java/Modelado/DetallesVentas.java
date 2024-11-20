@@ -1,6 +1,7 @@
 package Modelado;
 
 public class DetallesVentas {
+
     private int idDetalles;
     private int idVentas;
     private int idIngresos;

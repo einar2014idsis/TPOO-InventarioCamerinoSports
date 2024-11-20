@@ -5,6 +5,7 @@ import Modelado.Proveedores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class ControlProveedores {
             int n = ps.executeUpdate();
 
             return n != 0;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             return false;
         }
@@ -50,12 +51,8 @@ public class ControlProveedores {
             ps.setString(4, pro.getDireccionProveedor());
             ps.setString(5, pro.getCorreoProveedor());
             int n = ps.executeUpdate();
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
+            return n != 0;
+        } catch (SQLException ex) {
             JOptionPane.showConfirmDialog(null, ex);
             return false;
         }
@@ -78,7 +75,7 @@ public class ControlProveedores {
                 cli.setCorreoProveedor(rs.getString(6));
                 lista.add(cli);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return lista;
@@ -102,7 +99,7 @@ public class ControlProveedores {
             } else {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
@@ -120,7 +117,7 @@ public class ControlProveedores {
             ps.setString(5, pro.getRucProveedor());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return false;
         }
@@ -134,7 +131,7 @@ public class ControlProveedores {
             ps.setString(1, pro.getRucProveedor());
             int n = ps.executeUpdate();
             return n != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
             return false;
         }
