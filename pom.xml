@@ -4,7 +4,6 @@
     <groupId>com.mycompany</groupId>
     <artifactId>InventarioCamerinoSports</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
@@ -59,9 +58,14 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.toedter</groupId>
-            <artifactId>jcalendar</artifactId>
-            <version>1.4</version>
+            <groupId>groovy-4.0.14</groupId>
+            <artifactId>groovy-4.0.14</artifactId>
+            <version>4.0.14</version>
+        </dependency>
+        <dependency>
+            <groupId>jasperreports-6.20.0</groupId>
+            <artifactId>jasperreports-6.20.0</artifactId>
+            <version>6.20.0</version>
         </dependency>
     </dependencies>
     <properties>

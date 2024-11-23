@@ -2,8 +2,17 @@ package Vista;
 
 import Control.ControlProveedores;
 import Modelado.Proveedores;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
+import static java.lang.String.valueOf;
+import static java.lang.String.valueOf;
 import java.util.List;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 
 public class VProveedores extends javax.swing.JPanel {
@@ -20,8 +29,8 @@ public class VProveedores extends javax.swing.JPanel {
     private void listarPro() {
         List<Proveedores> lista = conPro.listarProveedores();
         modeloProveedor = (DefaultTableModel) tblProveedores.getModel();
-        Object[] ob = new Object[6];
-        for (int i = 0; i < lista.size(); i++) {
+        var ob = new Object[6];
+        for (var i = 0; i < lista.size(); i++) {
             ob[0] = lista.get(i).getIdProveedor();
             ob[1] = lista.get(i).getNombreProveedor();
             ob[2] = lista.get(i).getRucProveedor();
@@ -394,7 +403,7 @@ public class VProveedores extends javax.swing.JPanel {
     }
 
     void limpiarTblProveedores() {
-        for (int i = 0; i < modeloProveedor.getRowCount(); i++) {
+        for (var i = 0; i < modeloProveedor.getRowCount(); i++) {
             modeloProveedor.removeRow(i);
             i = 0 - 1;
         }
@@ -405,88 +414,88 @@ public class VProveedores extends javax.swing.JPanel {
 
     private void btnRegistrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProveedorActionPerformed
         if (txtNomPro.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo de nombre no puede estar vacío.");
+            showMessageDialog(null, "El campo de nombre no puede estar vacío.");
             return;
         }
         if (txtDirPro.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo de dirección no puede estar vacío.");
+            showMessageDialog(null, "El campo de dirección no puede estar vacío.");
             return;
         }
         if (txtCorrPro.getText().trim().isEmpty() || !txtCorrPro.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-            JOptionPane.showMessageDialog(null, "El campo de correo debe contener una dirección de correo válida.");
+            showMessageDialog(null, "El campo de correo debe contener una dirección de correo válida.");
             return;
         }
-        String rucText = txtRucPro.getText().trim();
-        String telText = txtTelPro.getText().trim();
+        var rucText = txtRucPro.getText().trim();
+        var telText = txtTelPro.getText().trim();
         if (rucText.isEmpty() || !rucText.matches("\\d{11}")) {
-            JOptionPane.showMessageDialog(null, "El RUC debe contener exactamente 11 dígitos numéricos.");
+            showMessageDialog(null, "El RUC debe contener exactamente 11 dígitos numéricos.");
             return;
         }
         if (!telText.isEmpty() && !telText.matches("\\d{9}")) {
-            JOptionPane.showMessageDialog(null, "El teléfono debe contener exactamente 9 dígitos numéricos.");
+            showMessageDialog(null, "El teléfono debe contener exactamente 9 dígitos numéricos.");
             return;
         }
 
         try {
-            Proveedores nuevoProveedor = new Proveedores();
+            var nuevoProveedor = new Proveedores();
             nuevoProveedor.setNombreProveedor(txtNomPro.getText().trim());
             nuevoProveedor.setRucProveedor(rucText);
             nuevoProveedor.setDireccionProveedor(txtDirPro.getText().trim());
             nuevoProveedor.setCorreoProveedor(txtCorrPro.getText().trim());
 
             if (!telText.isEmpty()) {
-                nuevoProveedor.setTelefonoProveedor(Integer.parseInt(telText));
+                nuevoProveedor.setTelefonoProveedor(parseInt(telText));
             }
 
             List<Proveedores> listaProveedores = conPro.listarProveedores();
-            boolean proveedorExisteRuc = listaProveedores.stream()
+            var proveedorExisteRuc = listaProveedores.stream()
                     .anyMatch(proveedor -> rucText.equals(proveedor.getRucProveedor()));
             if (proveedorExisteRuc) {
-                JOptionPane.showMessageDialog(null, "El proveedor con ese RUC ya existe.");
+                showMessageDialog(null, "El proveedor con ese RUC ya existe.");
                 return;
             }
             if (conPro.reinicioProveedores(nuevoProveedor)) {
-                JOptionPane.showMessageDialog(null, "Proveedor registrado correctamente.");
+                showMessageDialog(null, "Proveedor registrado correctamente.");
                 limpiarTblProveedores();
                 listarPro();
                 limpiarTextosProveedor();
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo registrar el proveedor.");
+                showMessageDialog(null, "No se pudo registrar el proveedor.");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error en el formato de los campos numéricos.");
+            showMessageDialog(null, "Error en el formato de los campos numéricos.");
         }
     }//GEN-LAST:event_btnRegistrarProveedorActionPerformed
 
     private void btnBuscarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProveedorActionPerformed
         if (txtRucPro.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se puede realizar la búsqueda sin un RUC de proveedor.");
+            showMessageDialog(null, "No se puede realizar la búsqueda sin un RUC de proveedor.");
             limpiarTextosProveedor();
         } else {
-            String ruc = txtRucPro.getText().trim();
+            var ruc = txtRucPro.getText().trim();
             pro.setRucProveedor(ruc);
 
             if (conPro.buscarProveedores(pro)) {
-                txtIdPro.setText(String.valueOf(pro.getIdProveedor()));
+                txtIdPro.setText(valueOf(pro.getIdProveedor()));
                 txtNomPro.setText(pro.getNombreProveedor());
                 txtRucPro.setText(pro.getRucProveedor());
-                txtTelPro.setText(String.valueOf(pro.getTelefonoProveedor()));
+                txtTelPro.setText(valueOf(pro.getTelefonoProveedor()));
                 txtDirPro.setText(pro.getDireccionProveedor());
                 txtCorrPro.setText(pro.getCorreoProveedor());
             } else {
-                JOptionPane.showMessageDialog(null, "Proveedor con ese RUC no encontrado.");
+                showMessageDialog(null, "Proveedor con ese RUC no encontrado.");
                 limpiarTextosProveedor();
             }
         }
     }//GEN-LAST:event_btnBuscarProveedorActionPerformed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
-        int fila = tblProveedores.getSelectedRow();
+        var fila = tblProveedores.getSelectedRow();
         if (fila == -1 && txtRucPro.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione un proveedor o ingrese un RUC válido.");
+            showMessageDialog(null, "Seleccione un proveedor o ingrese un RUC válido.");
         } else {
             List<Proveedores> listaProveedores = conPro.listarProveedores();
-            String rucText = txtRucPro.getText().trim();
+            var rucText = txtRucPro.getText().trim();
             Proveedores proveedorActual = null;
 
             if (!rucText.isEmpty()) {
@@ -496,13 +505,13 @@ public class VProveedores extends javax.swing.JPanel {
                         .orElse(null);
             }
             if (proveedorActual == null) {
-                JOptionPane.showMessageDialog(null, "Error: No se puede modificar porque el proveedor no está registrado.");
+                showMessageDialog(null, "Error: No se puede modificar porque el proveedor no está registrado.");
             } else {
-                String nuevoNombre = txtNomPro.getText().trim();
-                String nuevaDireccion = txtDirPro.getText().trim();
-                String nuevoCorreo = txtCorrPro.getText().trim();
-                String nuevoTelefono = txtTelPro.getText().trim();
-                boolean cambios = false;
+                var nuevoNombre = txtNomPro.getText().trim();
+                var nuevaDireccion = txtDirPro.getText().trim();
+                var nuevoCorreo = txtCorrPro.getText().trim();
+                var nuevoTelefono = txtTelPro.getText().trim();
+                var cambios = false;
 
                 if (!nuevoNombre.isEmpty() && !proveedorActual.getNombreProveedor().equals(nuevoNombre)) {
                     proveedorActual.setNombreProveedor(nuevoNombre);
@@ -516,20 +525,20 @@ public class VProveedores extends javax.swing.JPanel {
                     proveedorActual.setCorreoProveedor(nuevoCorreo);
                     cambios = true;
                 }
-                if (!nuevoTelefono.isEmpty() && !String.valueOf(proveedorActual.getTelefonoProveedor()).equals(nuevoTelefono)) {
-                    proveedorActual.setTelefonoProveedor(Integer.parseInt(nuevoTelefono));
+                if (!nuevoTelefono.isEmpty() && !valueOf(proveedorActual.getTelefonoProveedor()).equals(nuevoTelefono)) {
+                    proveedorActual.setTelefonoProveedor(parseInt(nuevoTelefono));
                     cambios = true;
                 }
                 if (!cambios) {
-                    JOptionPane.showMessageDialog(null, "No se realizaron cambios en el proveedor.");
+                    showMessageDialog(null, "No se realizaron cambios en el proveedor.");
                 } else {
                     if (conPro.editarProveedores(proveedorActual)) {
-                        JOptionPane.showMessageDialog(null, "¡Modificación de proveedor exitosa!");
+                        showMessageDialog(null, "¡Modificación de proveedor exitosa!");
                         limpiarTblProveedores();
                         listarPro();
                         limpiarTextosProveedor();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error: No se pudo modificar el proveedor.");
+                        showMessageDialog(null, "Error: No se pudo modificar el proveedor.");
                     }
                 }
             }
@@ -538,11 +547,10 @@ public class VProveedores extends javax.swing.JPanel {
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         if (!txtRucPro.getText().isEmpty()) {
-            String rucText = txtRucPro.getText().trim();
+            var rucText = txtRucPro.getText().trim();
             List<Proveedores> listaProveedores = conPro.listarProveedores();
-            boolean proveedorExiste = false;
-
-            for (Proveedores proveedor : listaProveedores) {
+            var proveedorExiste = false;
+            for (var proveedor : listaProveedores) {
                 if (rucText.equals(proveedor.getRucProveedor())) {
                     proveedorExiste = true;
                     break;
@@ -550,30 +558,30 @@ public class VProveedores extends javax.swing.JPanel {
             }
 
             if (!proveedorExiste) {
-                JOptionPane.showMessageDialog(null, "Error: El RUC del proveedor no existe.");
+                showMessageDialog(null, "Error: El RUC del proveedor no existe.");
             } else {
-                int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el proveedor?", "Confirmar", JOptionPane.YES_NO_OPTION);
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    Proveedores proveedorAEliminar = new Proveedores();
+                var confirmacion = showConfirmDialog(null, "¿Estás seguro de eliminar el proveedor?", "Confirmar", YES_NO_OPTION);
+                if (confirmacion == YES_OPTION) {
+                    var proveedorAEliminar = new Proveedores();
                     proveedorAEliminar.setRucProveedor(rucText);
 
                     if (conPro.eliminarProveedores(proveedorAEliminar)) {
                         limpiarTblProveedores();
                         listarPro();
                         limpiarTextosProveedor();
-                        JOptionPane.showMessageDialog(null, "Se eliminó con éxito el proveedor.");
+                        showMessageDialog(null, "Se eliminó con éxito el proveedor.");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error: No se pudo eliminar el proveedor.");
+                        showMessageDialog(null, "Error: No se pudo eliminar el proveedor.");
                     }
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar, ingrese el RUC del proveedor.");
+            showMessageDialog(null, "No se puede eliminar, ingrese el RUC del proveedor.");
         }
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void tblProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedoresMouseClicked
-        int fila = tblProveedores.getSelectedRow();
+        var fila = tblProveedores.getSelectedRow();
         txtIdPro.setText(tblProveedores.getValueAt(fila, 0).toString());
         txtNomPro.setText(tblProveedores.getValueAt(fila, 1).toString());
         txtRucPro.setText(tblProveedores.getValueAt(fila, 2).toString());
