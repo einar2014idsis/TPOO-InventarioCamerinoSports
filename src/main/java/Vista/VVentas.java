@@ -8,29 +8,19 @@ import com.formdev.flatlaf.json.ParseException;
 import java.io.File;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import static net.sf.jasperreports.engine.JasperCompileManager.compileReport;
 import net.sf.jasperreports.engine.JasperFillManager;
-import static net.sf.jasperreports.engine.JasperFillManager.fillReport;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
@@ -940,25 +930,50 @@ public class VVentas extends javax.swing.JPanel {
         txtFeVenta.setText("");
     }
 
-    private final Connection conection = new Conexion().conectar();
+    private Connection conection = new Conexion().conectar();
 
     private void mostrarReporte(String numVentas) {
-        Map m = new HashMap();
-        m.put("numVenta", numVentas);
-        JasperReport reporte;
-        JasperPrint imprimir;
+        if (numVentas == null || numVentas.isEmpty()) {
+            System.err.println("Error: Número de Venta no válido.");
+            return;
+        }
+
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("NumeroVenta", numVentas);
 
         try {
-            reporte = compileReport(new File("").getAbsolutePath() + "/src/main/java/Reportes/RVentas.jrxml");
-            imprimir = fillReport(reporte, m, conection);
-            JasperViewer vista = new JasperViewer(imprimir, false);
-            vista.setTitle("reporte de venta N° " + numVentas);
-            vista.setVisible(true);
+            String rutaReporte = new File("").getAbsolutePath() + "/src/main/java/Reportes/RVentas.jrxml";
 
-        } catch (JRException e) {
+            File archivoReporte = new File(rutaReporte);
+            if (!archivoReporte.exists()) {
+                System.err.println("Error: El archivo del reporte no se encontró en la ruta: " + rutaReporte);
+                return;
+            }
+
+            if (conection == null || conection.isClosed()) {
+                System.err.println("Error: No se pudo establecer conexión con la base de datos.");
+                return;
+            }
+
+            JasperReport reporte = JasperCompileManager.compileReport(rutaReporte);
+            JasperPrint imprimir = JasperFillManager.fillReport(reporte, parametros, conection);
+
+            if (imprimir.getPages().isEmpty()) {
+                System.out.println("No hay datos para mostrar en el reporte.");
+                return;
+            }
+
+            JasperViewer vistaReporte = new JasperViewer(imprimir, false);
+            vistaReporte.setTitle("Reporte de Venta N° " + numVentas);
+            vistaReporte.setVisible(true);
+
+        } catch (JRException | SQLException e) {
             e.printStackTrace();
+            System.err.println("Error al generar el reporte: " + e.getMessage());
         }
     }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconDos btnAñadir;
     private RSMaterialComponent.RSButtonMaterialIconDos btnBuscarClientes;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteVentas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="20" bottomMargin="20" uuid="7d4bb873-de29-4356-85d9-626d727cf644">
-	<property name="ireport.zoom" value="1.9487171000000107"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="455"/>
+	<property name="ireport.y" value="15"/>
 	<parameter name="NumeroVenta" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -20,7 +20,7 @@
             ingresos.nombreProducto AS ingresos_nombreProducto,
             ingresos.precioVenta AS ingresos_precioVenta
         FROM
-            ventas ventas
+            ventas
             INNER JOIN detallesventa detallesventa ON ventas.idVentas = detallesventa.idVentas
             INNER JOIN clientes clientes ON ventas.idClientes = clientes.idClientes
             INNER JOIN ingresos ingresos ON detallesventa.idIngresos = ingresos.idIngresos
@@ -35,7 +35,7 @@
 	<field name="detallesventa_importe" class="java.math.BigDecimal"/>
 	<field name="clientes_nombreCliente" class="java.lang.String"/>
 	<field name="clientes_apellidoCliente" class="java.lang.String"/>
-	<field name="clientes_dniCliente" class="java.lang.String"/>
+	<field name="clientes_dniCliente" class="java.lang.Integer"/>
 	<field name="clientes_rucCliente" class="java.lang.String"/>
 	<field name="ingresos_nombreProducto" class="java.lang.String"/>
 	<field name="ingresos_precioVenta" class="java.math.BigDecimal"/>
@@ -45,7 +45,7 @@
 	<title>
 		<band height="85">
 			<staticText>
-				<reportElement x="85" y="38" width="312" height="40" uuid="dda8ffab-eaaf-410b-9e7f-f9ff67fdc4c9"/>
+				<reportElement x="90" y="38" width="312" height="40" uuid="dda8ffab-eaaf-410b-9e7f-f9ff67fdc4c9"/>
 				<textElement textAlignment="Center">
 					<font size="18" isBold="true"/>
 				</textElement>
@@ -59,10 +59,6 @@
 				<reportElement x="0" y="38" width="45" height="20" uuid="5bca4bd7-a665-40ba-9fd7-f6700c0db2e5"/>
 				<text><![CDATA[Venta N°:]]></text>
 			</staticText>
-			<image scaleImage="FillFrame">
-				<reportElement x="397" y="0" width="118" height="38" uuid="bd5d0e68-0f7a-4eba-8875-23e8f59c1af3"/>
-				<imageExpression><![CDATA["C:\\Users\\LuisMGF\\Desktop\\Imagen de WhatsApp 2024-09-25 a las 11.34.22_a6a7f35b.jpg"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>

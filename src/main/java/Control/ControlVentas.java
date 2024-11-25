@@ -85,18 +85,19 @@ public class ControlVentas {
         return lista;
     }
 
-    public String numVenta() {
-        String sql = "SELECT MAX(CAST(numVenta AS UNSIGNED)) FROM ventas";
-        try {
+    public String numVenta(){
+        String NumeroVenta="";
+        String SQL="SELECT MAX(idVentas) FROM ventas";
+         try{
             con = cven.conectar();
-            ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString(1);
+            ps = con.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            while(rs.next()){
+            NumeroVenta=rs.getString(1);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el número de venta: " + ex.getMessage());
+        }catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
         }
-        return null;
+        return NumeroVenta;
     }
 }
